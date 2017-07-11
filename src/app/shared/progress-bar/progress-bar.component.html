@@ -1,0 +1,9 @@
+<div class="progress">
+  <div class="progress-bar bg-info" role="progressbar" [class.progress-bar-animated]="animated"
+       [style.width.%]="getPercentValue()" [attr.aria-valuenow]="getValue()" aria-valuemin="0"
+       [attr.aria-valuemax]="getMax()">
+  </div>
+  <span *ngIf="0 == getMax()">Starting download</span>
+  <span *ngIf="getValue() < getMax()">{{ getValue() }} of {{ getMax() }}</span>
+  <span *ngIf="0!= getMax() && getValue() >= getMax()">Download complete</span>
+</div>

@@ -1,20 +1,67 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
+<div class="container-fluid text-center">
+  <div class="row content">
+    <div class="col-sm-2 sidenav">
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+      <p><a href="#">Link</a></p>
+    </div>
+    <div class="col-sm-8 text-left">
+      <h1>IT Tickets CRM</h1>
+      <div>
+        <p>TODO: filter & sorting option</p>
+        <button *ngIf="!exportStatus" class="btn btn-primary" (click)="exportTickets()">Export all tickets</button>
+        <a target="_blank" [href]="downloadLink" #downloadAnchor [hidden]="true">{{ downloadLink }}</a>
+        <div *ngIf="exportStatus && !exportStatus.error">
+          <label for="exportID">Export progress:</label>
+          <progress-bar id="exportID" [animated]="true" [value]="exportStatus.value"
+                        [max]="exportStatus.max"></progress-bar>
+        </div>
+        <div *ngIf="exportStatus?.error" class="alert alert-danger" role="alert">
+          <strong>Download failed!</strong>
+        </div>
+      </div>
+      <div>
+        <h2>Info web app</h2>
+        <ul>
+          <li>The app should be secured</li>
+          <li>Export api should be accessed based on user permission</li>
+          <li>User status exports should be persisted (now if the user close the page will loose access to the current
+            download
+            progress bar)
+          </li>
+          <li>Export status should be pushed via web sockets and not as it is implemented now.</li>
+          <li><b>Alternative solution proposal:</b> instead of export & download in the same step i would prefer a two
+            steps implementation:
+            <ol>
+              <li>trigger an export that will be prepared by server</li>
+              <li>make the export available via download link</li>
+            </ol>
+          </li>
+          <li>
+            Implement an error handler that reports to api server
+          </li>
+          <li>Export status is not 100% accurate, download may take longer.</li>
+        </ul>
+        <h2>Info api</h2>
+        <ul>
+          <li>TODO: implement sort & filters for export (like ticket status, date's interval)</li>
+          <li>Memory: mitigated by using streams (avoid reading batch of data directly or all data)</li>
+          <li>Speed: TODO: read ahead from storage source, this should be balanced with the download speed and only
+            applied on we have download speed greater than reading from storage source
+          </li>
+          <li>Improved download time and reduced download size by returning the response as a zip</li>
+          <li>In case download stuck timeout exceptions are raised on app or api</li>
+          <li>Storage solution should be read consistent</li>
+          <li>For testing purpose i've used in memory database</li>
+          <li>Ticket model is far from reality</li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-2 sidenav">
+      <div>
+      </div>
+      <div>
+      </div>
+    </div>
+  </div>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="http://angularjs.blogspot.ca/">Angular blog</a></h2>
-  </li>
-</ul>
-
