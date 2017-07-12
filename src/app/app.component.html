@@ -54,6 +54,9 @@
           <li>Storage solution should be read consistent</li>
           <li>For testing purpose i've used in memory database</li>
           <li>Ticket model is far from reality</li>
+          <li>Due the fact that the exported file size may be quite large and the download time may take a significant amount of time, it's more likely that network issues to occurs.
+            To overcame this problem a retry mechanism for reading from the storage source should be implemented.
+          For the download part between client and api server we cannot do nothing as this depends on the user client.</li>
         </ul>
       </div>
     </div>
